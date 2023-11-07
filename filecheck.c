@@ -67,8 +67,6 @@ int main(int argc, char* argv[]) {
     string* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
     printf("whole array is %d, one value is %d",sizeof(dircont), sizeof(dircont[0])); //find size of unitialized array
     argc--;
-    bool hide = false;
-//  printf("%s", argv[1]); //print out arg (make it print out all)
     if (argc > 0 && (strcmp(argv[1],"-h") == 0 || strcmp(argv[1],"--help") == 0)) printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n");
     //argv will have the format of {path, {user input}, NULL-TERMINATOR, SHELL_PATH, SESSION_MANAGER, QT_ACCESSIBILITY, COLORTERM, XDG_CONFIG_DIR, SSH_AGENT_LAUNCHER}
 	puts("Input desired filename");
