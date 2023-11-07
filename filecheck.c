@@ -8,15 +8,18 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+const MAX_DIR_SIZE = 1024;
 //#include <printfile.h> //a-hehe a-haha
 
 //todone: GITHUB
 //todont: add step in //nvm thats dumb
 //todone: choose between hidden files or not
 //todo: run by param
-//todo: make a dll if i give a shit
+//todo: make a dll (for testing)
 //todo: add everything to headers
-
+//todo: deprecate p_dir
+//todo: more memory-efficient way of doing dircont w/ larger capacity
+//todo: make print function for 'logged' data
 void p_dir(char *fn, bool hidden){
 DIR *dir;
 struct dirent *entry;
@@ -40,9 +43,22 @@ while((entry = readdir(dir)) != NULL){
     }
 }
 
+void logdir(string* log, char* fn) {
+DIR *dir; //pointer to the current dir
+struct dirent *entry; //struct containing info about the current entry 
+uint16_t i = 0; //iterator for l8r
+if ((dir = opendir(fn)) == NULL && errno != ENOTDIR)//check to see if its a valid dir
+    perror("/t"); //print error out with tab
+while((entry = readdir(dir)) != NULL && i < MAX_DIR_SIZE){ //set entry to subsequent entrys in the dir and as long as tbey are nkt null, continue 
+    log[i] = entry->d_name; //adding the name to the log
+    i++; //iterate place in log[]
+}
+}
 
 int main(int argc, char* argv[]) {
     //real num of args
+    string dircont[MAX_DIR_SIZE];
+    printf("%d",sizeof(dircont)); //find size of unitialized array
     argc--;
     bool hide = false;
 //  printf("%s", argv[1]); //print out arg (make it print out all)
