@@ -60,7 +60,7 @@ while((entry = readdir(dir)) != NULL && i < MAX_DIR_SIZE){ //set entry to subseq
 void printDirLog(char** elem, char* path){ //check to see if sizeof() works to find jt
 int file = 0;
 while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
-    printf("\n|--%s/%s\n|",path, elem[file]);
+    printf("\n|--%s/%s",path, elem[file]);
     file++;
 }
 }
@@ -70,7 +70,10 @@ int main(int argc, char* argv[]) {
     char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
     printf("whole array is %ld bytes, one value is %ld bytes\n",sizeof(dircont), sizeof(dircont[0])); //find size of unitialized array
     argc--;
-    if (argc > 0 && (strcmp(argv[1],"-h") == 0 || strcmp(argv[1],"--help") == 0)) printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n");
+    if (argc > 0 && (strcmp(argv[1],"-h") == 0 || strcmp(argv[1],"--help") == 0)){
+        printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n\n");
+        return EXIT_SUCCESS;
+    }
     //argv will have the format of {path, {user input}, NULL-TERMINATOR, SHELL_PATH, SESSION_MANAGER, QT_ACCESSIBILITY, COLORTERM, XDG_CONFIG_DIR, SSH_AGENT_LAUNCHER}
 	puts("Input desired filename");
 	char dirplace[1025];
@@ -78,6 +81,7 @@ int main(int argc, char* argv[]) {
 	dirplace[strcspn(dirplace, "\n")] = 0;
     logdir(dircont, dirplace);
     printDirLog(dircont, dirplace);
+    puts("");
 //    for (int i =0; i < sizeof(dircont)/sizeof(char); i++) {printf("%s  ",dircont[i]);}
 return EXIT_SUCCESS;
 }	
