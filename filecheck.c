@@ -43,7 +43,7 @@ while((entry = readdir(dir)) != NULL){
     }
 }
 
-void logdir(string* log, char* fn) {
+void logdir(string** log, char* fn) {
 DIR *dir; //pointer to the current dir
 struct dirent *entry; //struct containing info about the current entry 
 uint16_t i = 0; //iterator for l8r
@@ -55,10 +55,12 @@ while((entry = readdir(dir)) != NULL && i < MAX_DIR_SIZE){ //set entry to subseq
 }
 }
 
+void printdir(string** elem){ //check to see if sizeof() works to find jt 
+    
 int main(int argc, char* argv[]) {
     //real num of args
-    string dircont[MAX_DIR_SIZE];
-    printf("%d",sizeof(dircont)); //find size of unitialized array
+    string* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
+    printf("whole array is %d, one value is %d",sizeof(dircont), sizeof(dircont[0])); //find size of unitialized array
     argc--;
     bool hide = false;
 //  printf("%s", argv[1]); //print out arg (make it print out all)
@@ -68,7 +70,8 @@ int main(int argc, char* argv[]) {
 	char dirplace[1025];
 	fgets(dirplace,1025,stdin); //make this work through fgets when its done being brokey //oh hey look i did
 	dirplace[strcspn(dirplace, "\n")] = 0;
-	p_dir(dirplace,false);
-	printf("\b \b"); //do a delete the last character
+    logdir(dircont, dirplace);
+	//p_dir(dirplace,false); //discontinued i hope
+	//printf("\b \b"); //do a delete the last character
 return EXIT_SUCCESS;
 }	
