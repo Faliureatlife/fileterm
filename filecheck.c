@@ -8,7 +8,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
-const MAX_DIR_SIZE = 1024;
+#include <stdint.h>
+const uint16_t MAX_DIR_SIZE = 1024;
 //#include <printfile.h> //a-hehe a-haha
 
 //todone: GITHUB
@@ -44,7 +45,7 @@ while((entry = readdir(dir)) != NULL){
     }
 }
 
-void logdir(string** log, char* fn) {
+void logdir(char** log, char* fn) {
 DIR *dir; //pointer to the current dir
 struct dirent *entry; //struct containing info about the current entry 
 uint16_t i = 0; //iterator for l8r
@@ -56,16 +57,18 @@ while((entry = readdir(dir)) != NULL && i < MAX_DIR_SIZE){ //set entry to subseq
 }
 }
 
-void printDirLog(string** elem, char* path){ //check to see if sizeof() works to find jt 
+void printDirLog(char** elem, char* path){ //check to see if sizeof() works to find jt
 int file = 0;
-while(elem[file+1] != nullptr && file < MAX_DIR_SIZE)
-printf("\n|--%s/%s\n|",path, elem[file]);
+while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
+    printf("\n|--%s/%s\n|",path, elem[file]);
+    file++;
+}
 }
 
 int main(int argc, char* argv[]) {
     //real num of args
-    string* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
-    printf("whole array is %d, one value is %d",sizeof(dircont), sizeof(dircont[0])); //find size of unitialized array
+    char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
+    printf("whole array is %ld bytes, one value is %ld bytes\n",sizeof(dircont), sizeof(dircont[0])); //find size of unitialized array
     argc--;
     if (argc > 0 && (strcmp(argv[1],"-h") == 0 || strcmp(argv[1],"--help") == 0)) printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n");
     //argv will have the format of {path, {user input}, NULL-TERMINATOR, SHELL_PATH, SESSION_MANAGER, QT_ACCESSIBILITY, COLORTERM, XDG_CONFIG_DIR, SSH_AGENT_LAUNCHER}
@@ -74,7 +77,7 @@ int main(int argc, char* argv[]) {
 	fgets(dirplace,1025,stdin); //make this work through fgets when its done being brokey //oh hey look i did
 	dirplace[strcspn(dirplace, "\n")] = 0;
     logdir(dircont, dirplace);
-	//p_dir(dirplace,false); //discontinued i hope
-	//printf("\b \b"); //do a delete the last character
+    printDirLog(dircont, dirplace);
+//    for (int i =0; i < sizeof(dircont)/sizeof(char); i++) {printf("%s  ",dircont[i]);}
 return EXIT_SUCCESS;
 }	
