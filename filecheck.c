@@ -20,6 +20,7 @@ const MAX_DIR_SIZE = 1024;
 //todo: deprecate p_dir
 //todo: more memory-efficient way of doing dircont w/ larger capacity
 //todo: make print function for 'logged' data
+//todo: make global "me" include of helper funcs (swap, foreach, own boolean implementation?, etc.)
 void p_dir(char *fn, bool hidden){
 DIR *dir;
 struct dirent *entry;
@@ -55,8 +56,12 @@ while((entry = readdir(dir)) != NULL && i < MAX_DIR_SIZE){ //set entry to subseq
 }
 }
 
-void printdir(string** elem){ //check to see if sizeof() works to find jt 
-    
+void printDirLog(string** elem, char* path){ //check to see if sizeof() works to find jt 
+int file = 0;
+while(elem[file+1] != nullptr && file < MAX_DIR_SIZE)
+printf("\n|--%s/%s\n|",path, elem[file]);
+}
+
 int main(int argc, char* argv[]) {
     //real num of args
     string* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
