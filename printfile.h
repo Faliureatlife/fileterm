@@ -1,3 +1,0 @@
-#ifndef PRINTFILE
-#define PRINTFILE
-#endif PRINTFILE

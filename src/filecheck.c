@@ -77,7 +77,7 @@ while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
 
 int main(int argc, char* argv[]) {
     //real num of args
-    if (argc == 1) {puts("No input given; exiting program"); return 0;} //if no input then quit
+    if (argc == 1) {puts("No input given; exiting program"); return EXIT_FAILURE;} //if no input then quit
     char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
     argc--;
     int argn = 1;
@@ -97,16 +97,6 @@ int main(int argc, char* argv[]) {
     } else {
     return 0;
     }
- //  }
-
-    //argv will have the format of {path, {user input}, NULL-TERMINATOR, SHELL_PATH, SESSION_MANAGER, QT_ACCESSIBILITY, COLORTERM, XDG_CONFIG_DIR, SSH_AGENT_LAUNCHER}
-//	puts("Input desired filename");
-//	char dirplace[1025];
-//	fgets(dirplace,1025,stdin); //make this work through fgets when its done being brokey //oh hey look i did
-//	dirplace[strcspn(dirplace, "\n")] = 0;
-//    logdir(dircont, dirplace);
-//    printDirLog(dircont, dirplace);
     puts("");
-//    for (int i =0; i < sizeof(dircont)/sizeof(char); i++) {printf("%s  ",dircont[i]);}
 return EXIT_SUCCESS;
-}	
+}
