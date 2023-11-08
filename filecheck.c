@@ -65,22 +65,42 @@ while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
 }
 }
 
+void printUnhiddenDirLog(char** elem, char* path){
+int file = 0;
+while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
+    if (elem[file][0] != '.')
+    printf("\n|--%s/%s",path, elem[file]);
+    file++;
+}
+}
 int main(int argc, char* argv[]) {
     //real num of args
     char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
-    printf("whole array is %ld bytes, one value is %ld bytes\n",sizeof(dircont), sizeof(dircont[0])); //find size of unitialized array
     argc--;
-    if (argc > 0 && (strcmp(argv[1],"-h") == 0 || strcmp(argv[1],"--help") == 0)){
+    int argn = 1;
+    char dirplace[1025];
+//    for (argn < argc; argn++){
+    if ((strcmp(argv[argn],"-h") == 0 || strcmp(argv[argn],"--help") == 0)){
         printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n\n");
         return EXIT_SUCCESS;
+    } else if (argc > 1 && (strcmp(argv[argn],"-hidden")) == 0){
+        strcpy(dirplace,argv[argn + 1]);
+        logdir(dircont, dirplace);
+        printUnhiddenDirLog(dircont, dirplace);
+    } else if (argc > 0) {
+        strcpy(dirplace,argv[argn]);
+        logdir(dircont, dirplace);
+        printDirLog(dircont, dirplace);
     }
+ //  }
+
     //argv will have the format of {path, {user input}, NULL-TERMINATOR, SHELL_PATH, SESSION_MANAGER, QT_ACCESSIBILITY, COLORTERM, XDG_CONFIG_DIR, SSH_AGENT_LAUNCHER}
-	puts("Input desired filename");
-	char dirplace[1025];
-	fgets(dirplace,1025,stdin); //make this work through fgets when its done being brokey //oh hey look i did
-	dirplace[strcspn(dirplace, "\n")] = 0;
-    logdir(dircont, dirplace);
-    printDirLog(dircont, dirplace);
+//	puts("Input desired filename");
+//	char dirplace[1025];
+//	fgets(dirplace,1025,stdin); //make this work through fgets when its done being brokey //oh hey look i did
+//	dirplace[strcspn(dirplace, "\n")] = 0;
+//    logdir(dircont, dirplace);
+//    printDirLog(dircont, dirplace);
     puts("");
 //    for (int i =0; i < sizeof(dircont)/sizeof(char); i++) {printf("%s  ",dircont[i]);}
 return EXIT_SUCCESS;
