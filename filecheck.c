@@ -22,6 +22,7 @@ const uint16_t MAX_DIR_SIZE = 1024;
 //todo: more memory-efficient way of doing dircont w/ larger capacity
 //todo: make print function for 'logged' data
 //todo: make global "me" include of helper funcs (swap, foreach, own boolean implementation?, etc.)
+//todo: make not crash on no input;
 void p_dir(char *fn, bool hidden){
 DIR *dir;
 struct dirent *entry;
@@ -73,8 +74,10 @@ while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
     file++;
 }
 }
+
 int main(int argc, char* argv[]) {
     //real num of args
+    if (argc == 1) {puts("No input given; exiting program"); return 0;} //if no input then quit
     char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
     argc--;
     int argn = 1;
@@ -91,6 +94,8 @@ int main(int argc, char* argv[]) {
         strcpy(dirplace,argv[argn]);
         logdir(dircont, dirplace);
         printDirLog(dircont, dirplace);
+    } else {
+    return 0;
     }
  //  }
 
