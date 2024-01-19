@@ -3,11 +3,11 @@ SHELL := /bin/bash
 CFLAGS := $(shell pkg-config --cflags gtk4)
 CLIBS := $(shell pkg-config --libs gtk4)
 
-term: term.o
-	gcc $(CFLAGS) -o term term.o $(CLIBS)
+term: termui.o
+	gcc $(CFLAGS) -o term termui.o $(CLIBS)
 
-term.o:term.c
-	gcc $(CFLAGS) -c term.c $(CLIBS)  
+termui.o:termui.c
+	gcc $(CFLAGS) -c termui.c $(CLIBS)  
 
 clean:
-	rm *.o term
+	rm term.o 
