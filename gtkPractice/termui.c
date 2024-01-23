@@ -2,8 +2,8 @@
 #include <glib/gstdio.h>
 #include <string.h>
 
-static void printI(GtkWidget *widget, gpointer data, char *a) {
-  g_print("Herrow");
+static void printI(GtkWidget *widget, gpointer data) {
+  g_print("Herrow\n");
 }
 
 static void quit (GtkWindow *window){
@@ -30,6 +30,9 @@ static void activate(GtkApplication *app, gpointer user_data){
   g_signal_connect_swapped(button,"clicked",G_CALLBACK(quit), window);
 
   gtk_widget_set_visible(GTK_WIDGET(window), TRUE);
+
+
+  //builder no longer needed
   g_object_unref(builder);
 }
 
@@ -38,7 +41,7 @@ int main (int argc, char *argv[]) {
   g_chdir(GTK_SRCDIR);
 #endif
 
-  GtkApplication *app = gtk_application_new("poggers", G_APPLICATION_DEFAULT_FLAGS);
+  GtkApplication *app = gtk_application_new("com.example.myapp", G_APPLICATION_DEFAULT_FLAGS);
   g_signal_connect(app, "activate", G_CALLBACK(activate),NULL);
 
   int status = g_application_run(G_APPLICATION(app), argc, argv);
