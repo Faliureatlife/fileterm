@@ -3,7 +3,10 @@
   <object id="window" class="GtkWindow">
     <property name="title">Grid</property>
     <child>
-      <object id="grid" class="GtkGrid">
+      <object id="testbox" class="GtkBox">
+        <layout>
+          <property name="orientation">horizontal</property>
+        </layout>
         <child>
           <object id="button1" class="GtkButton">
            <property name="label">Button 1</property>
@@ -24,7 +27,7 @@
         </child>
         <child>
           <object id="quit" class="GtkButton">
-            <property name="label">Button 2</property>
+            <property name="label">Exit</property>
             <layout>
               <property name="column">0</property>
               <property name="row">1</property>
