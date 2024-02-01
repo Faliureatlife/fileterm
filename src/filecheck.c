@@ -10,8 +10,8 @@
 #include <stdio.h>
 #include <stdint.h>
 const uint16_t MAX_DIR_SIZE = 1024;
-//#include <printfile.h> //a-hehe a-haha
 
+//#include <printfile.h> //a-hehe a-haha
 //todone: GITHUB
 //todont: add step in //nvm thats dumb
 //todone: choose between hidden files or not
@@ -52,7 +52,7 @@ struct dirent *entry; //struct containing info about the current entry
 uint16_t i = 0; //iterator for l8r
 if ((dir = opendir(fn)) == NULL && errno != ENOTDIR)//check to see if its a valid dir
     perror("/t"); //print error out with tab
-while((entry = readdir(dir)) != NULL && i < MAX_DIR_SIZE){ //set entry to subsequent entrys in the dir and as long as tbey are nkt null, continue 
+while((entry = readdir(dir)) != NULL && i < MAX_DIR_SIZE){ //set entry to subsequent entrys in the dir and as long as tbey are not null, continue 
     log[i] = entry->d_name; //adding the name to the log
     i++; //iterate place in log[]
 }
@@ -63,7 +63,7 @@ int file = 0;
 while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
     printf("\n|--%s/%s",path, elem[file]);
     file++;
-}
+  }
 }
 
 void printUnhiddenDirLog(char** elem, char* path){
@@ -72,7 +72,15 @@ while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
     if (elem[file][0] != '.')
     printf("\n|--%s/%s",path, elem[file]);
     file++;
+  }
 }
+
+void printShortDirLog(char ** elem){
+int file=0;
+while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
+    printf("\n|--%s",elem[file]);
+    file++;
+  }  
 }
 
 int main(int argc, char* argv[]) {
@@ -86,7 +94,11 @@ int main(int argc, char* argv[]) {
     if ((strcmp(argv[argn],"-h") == 0 || strcmp(argv[argn],"--help") == 0)){
         printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n\n");
         return EXIT_SUCCESS;
-    } else if (argc > 1 && (strcmp(argv[argn],"-hidden")) == 0){
+    } else if (strcmp(argv[argn], "-s") == 0){
+        strcpy(dirplace,argv[argn +1]);
+        logdir(dircont,dirplace);
+        printShortDirLog(dircont);
+    } else if (argc > 1 && (strcmp(argv[argn],"--hidden")) == 0){
         strcpy(dirplace,argv[argn + 1]);
         logdir(dircont, dirplace);
         printUnhiddenDirLog(dircont, dirplace);
