@@ -76,39 +76,53 @@ while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
 }
 
 void printShortDirLog(char ** elem){
-int file=0;
+int file = 0;
 while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
     printf("\n|--%s",elem[file]);
     file++;
   }  
 }
 
+void printBooledDirLog(char** elem, char* path, bool h, bool s){
+  int file = 0;
+  while(elem[file+1] != NULL && file < MAX_DIR_SIZE){
+    if (h && elem[file][0] != '.')
+    {
+      if(s) {printf("\n|-%s",elem[file]);}
+      else printf("\n|-%s/%s",path,elem[file]);
+    }
+  }
+}
+
 int main(int argc, char* argv[]) {
     //real num of args
+    //toggle behaviors
+  bool hidden = false;
+  bool shortened = false;
     if (argc == 1) {puts("No input given; exiting program"); return EXIT_FAILURE;} //if no input then quit
     char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
     argc--;
-    int argn = 1;
     char dirplace[1025];
-//    for (argn < argc; argn++){
-    if ((strcmp(argv[argn],"-h") == 0 || strcmp(argv[argn],"--help") == 0)){
-        printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n\n");
-        return EXIT_SUCCESS;
-    } else if (strcmp(argv[argn], "-s") == 0){
-        strcpy(dirplace,argv[argn +1]);
-        logdir(dircont,dirplace);
-        printShortDirLog(dircont);
-    } else if (argc > 1 && (strcmp(argv[argn],"--hidden")) == 0){
-        strcpy(dirplace,argv[argn + 1]);
-        logdir(dircont, dirplace);
-        printUnhiddenDirLog(dircont, dirplace);
-    } else if (argc > 0) {
-        strcpy(dirplace,argv[argn]);
-        logdir(dircont, dirplace);
-        printDirLog(dircont, dirplace);
-    } else {
-    return 0;
+        //strcpy(dirplace,argv[argn +1]);
+        //logdir(dircont,dirplace);
+        //printShortDirLog(dircont);
+  for (int argn = 1; argn < argc; argn++){
+    if (argc == 1) {
+      printf("No input given");
+      return EXIT_FAILURE;
+    } 
+    if((strcmp(argv[argn],"-h") == 0) || (strcmp(argv[argn],"--hidden") == 0)){
+      printf("Format:  filecheck [args]\n -h      -- print this text\n -hidden -- hide all files prefixed with a '.'\n\n");
     }
-    puts("");
+    if (strcmp(argv[argn],"-s") == 0) 
+      shortened = !shortened;
+    
+    if (strcmp(argv[argn],"--hidden") == 0)
+      hidden = !hidden;
+  }
+  strcpy(dirplace, argv[argc-1]);
+  logdir(dircont,dirplace);
+  printBooledDirLog(dircont,dirplace,hidden,shortened);
+  puts("");
 return EXIT_SUCCESS;
 }
