@@ -100,13 +100,15 @@ int main(int argc, char* argv[]) {
   bool hidden = false;
   bool shortened = false;
     if (argc == 1) {puts("No input given; exiting program"); return EXIT_FAILURE;} //if no input then quit
-    char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
-    argc--;
-    char dirplace[1025];
+  char* dircont[MAX_DIR_SIZE]; //noninit array of max allowable size
+  //argc--;
+  char dirplace[1025];
+  puts("what");
         //strcpy(dirplace,argv[argn +1]);
         //logdir(dircont,dirplace);
         //printShortDirLog(dircont);
   for (int argn = 1; argn < argc; argn++){
+  printf("\n%i\n",argc);
     if (argc == 1) {
       printf("No input given");
       return EXIT_FAILURE;
@@ -120,7 +122,7 @@ int main(int argc, char* argv[]) {
     if (strcmp(argv[argn],"--hidden") == 0)
       hidden = !hidden;
   }
-  strcpy(dirplace, argv[argc-1]);
+  strcpy(dirplace, argv[argc+1]);
   logdir(dircont,dirplace);
   printBooledDirLog(dircont,dirplace,hidden,shortened);
   puts("");
